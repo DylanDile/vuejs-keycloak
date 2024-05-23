@@ -7,7 +7,7 @@ const options = {
 }
 
 const keycloak = new Keycloak(options);
-let authenticated;
+let authenticated = false;
 let store = null;
 
 /**
@@ -17,13 +17,13 @@ async function init() {
     try {
         authenticated = await keycloak.init({ onLoad: "login-required" })
         if (authenticated) {
-            console.log("User authenticated")
+            await initStore(store)
         }
     } catch (error) {
         console.error("Keycloak init failed")
         console.error(error)
     }
-};
+}
 
 /**
  * Initializes store with Keycloak user data
@@ -32,15 +32,14 @@ async function init() {
 async function initStore(storeInstance) {
     try {
         store = storeInstance
-        await store.initOauth(keycloak)
-
-        // Show alert if user is not authenticated
-        if (!authenticated) { console.error("User not authenticated")}
+        if(keycloak.authenticated) {
+            await store.initOauth(keycloak)
+        }
     } catch (error) {
-        console.error("Keycloak init failed")
+        console.error("Keycloak init store failed")
         console.error(error)
     }
-};
+}
 
 /**
  * Logout user

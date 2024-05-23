@@ -10,7 +10,7 @@ const authStorePlugin = {
         app.config.globalProperties.$store = store;
 
         // Store keycloak user data into store
-        keycloakService.CallInitStore(store).then(() => {});
+        keycloakService.CallInitStore(store);
 
         setupInterceptors(store);
     }

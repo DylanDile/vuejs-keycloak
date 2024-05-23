@@ -29,8 +29,6 @@ export const useAuthStore = defineStore({
             this.user.last_name = keycloak.idTokenParsed?.given_name ?? "";
             this.user.token = keycloak.token;
             this.user.refToken = keycloak.refreshToken;
-
-            console.log(this.user)
         },
         // Logout user
         async logout() {

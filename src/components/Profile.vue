@@ -1,19 +1,17 @@
 <script>
 import { useAuthStore} from "../stores/authStore.js";
-import {mapStores} from "pinia";
+import {mapState} from "pinia";
 
 export default {
   name: 'Profile',
   data() {
-    return {
-      user: {
-        name: 'John Doe',
-        email: 'james@mail.com'
-      }
-    }
+    return {}
   },
   methods: {
     useAuthStore,
+  },
+  computed: {
+    ...mapState(useAuthStore, ['user']),
   }
 }
 </script>
@@ -21,12 +19,9 @@ export default {
 <template>
   <div class="card">
     <h1>Profile</h1>
+    <router-link to="/" class="btn btn-link">Home</router-link>
     <p>Name: {{ user.name }}</p>
     <p>Email: {{ user.email }}</p>
-    <p>
-      <span>{{ user }}</span>
-    </p>
-    <button class="btn btn-danger">Refresh</button>
     <button @click="useAuthStore().logout">Logout</button>
   </div>
 </template>
